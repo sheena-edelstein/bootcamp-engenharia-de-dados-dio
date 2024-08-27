@@ -1,0 +1,97 @@
+from IPython.display import clear_output 
+
+total = 0
+saques = 0
+limite_de_saque = 500
+extrato = ""
+
+print("==================== Bem vindo(a) ao Edelbank! ====================")
+
+while True:
+  menu = """
+
+====================================================================
+Escolha a operação que você deseja realizar:
+
+[1] Depósito
+[2] Saque
+[3] Extrato
+[4] Sair
+
+====================================================================
+
+"""
+
+  opcao = int(input(menu))
+
+# DEPÓSITO
+  if opcao == 1:
+    clear_output()
+    valor_deposito = float(input("Digite o valor do seu depósito: "))
+    if valor_deposito <= 0:
+      print("Erro")
+    else:
+      print(f"Valor do depósito: R$ {valor_deposito: .2f}")
+      total += valor_deposito
+      print(f"Valor total: R$ {total: .2f}")
+      extrato += f"Depósito: R$ {valor_deposito: .2f}\n"
+
+# SAQUE
+  elif opcao == 2:
+    clear_output()
+    if saques > 2:
+      print("Você excedeu o número de saques.")
+    else:
+      valor_saque = float(input("Digite o valor do saque: "))
+      if valor_saque <= 0:
+        print("Erro")
+      elif valor_saque > total:
+        print("Você não tem saldo suficiente.")
+      elif valor_saque > limite_de_saque:
+        print("Você excedeu o limite de R$ 500.00 por saque.")
+      else:
+        print(f"Valor do saque: R$ {valor_saque: .2f}")
+        total -= valor_saque
+        print(f"Valor total: R$ {total: .2f}")
+        saques += 1
+        print(f"Você ainda pode sacar {3 - saques} vezes.")
+        extrato += f"Saque: R$ {valor_saque: .2f}\n"
+
+# EXTRATO
+  elif opcao == 3:
+    clear_output()
+    print("============================ EXTRATO ============================")
+    print(extrato)
+    print(f"Valor total: R$ {total: .2f}")
+    print("=================================================================")
+    eagora = """
+
+    =================== O que você quer fazer agora? ===================
+
+    [1] Voltar ao menu
+    [2] Sair
+
+    ====================================================================
+
+    """
+    final = int(input(eagora))
+    if final == 1:
+      continue
+    elif final == 2:
+      clear_output()
+      print("Obrigado por usar nossos serviços!")
+      break
+    else:
+      clear_output()
+      print("Opção inválida. Tente novamente.")
+
+# SAIR
+  elif opcao == 4:
+    clear_output()
+    print("Obrigado por usar nossos serviços!")
+    break
+
+# OPÇÃO INVÁLIDA
+  else:
+    clear_output()
+    print("Opção inválida. Tente novamente.")
